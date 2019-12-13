@@ -1,7 +1,8 @@
 // Type definitions for koa-views 2.x
 // Project: https://github.com/queckezz/koa-views
-// Definitions by: Alex Friedman <https://github.com/brooklyndev/>
+// Definitions by: Alex Friedman <https://github.com/brooklyndev>
 // Definitions: https://github.com/brooklyndev/DefinitelyTyped
+// TypeScript Version: 2.3
 
 /* =================== USAGE ===================
 
@@ -27,6 +28,10 @@ import * as Koa from "koa";
 
 declare function views(dir: string, opts?: {
     /*
+    * autoRender the result into ctx.body, defaults to true
+    */
+    autoRender?: boolean,
+    /*
     * default extension for your views
     */
     extension?: string,
@@ -46,8 +51,6 @@ declare function views(dir: string, opts?: {
 declare namespace views { }
 
 export = views;
-
-import * as koa from "koa";
 
 declare module 'koa' {
     interface Context {

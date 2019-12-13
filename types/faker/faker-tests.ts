@@ -1,5 +1,3 @@
-
-
 let resultStr: string;
 let resultBool: boolean;
 let resultNum: number;
@@ -9,15 +7,20 @@ let resultDate: Date;
 import faker = require('faker');
 faker.locale = 'en';
 
+faker.seedValue === undefined;
+faker.seed(123);
+faker.seedValue === 123;
+
 resultStr = faker.address.zipCode();
 resultStr = faker.address.zipCode('###');
+resultStr = faker.address.zipCodeByState('AL');
 resultStr = faker.address.city();
 resultStr = faker.address.city(0);
 resultStr = faker.address.cityPrefix();
 resultStr = faker.address.citySuffix();
 resultStr = faker.address.streetName();
 resultStr = faker.address.streetAddress();
-resultStr = faker.address.streetAddress(false);;
+resultStr = faker.address.streetAddress(false);
 resultStr = faker.address.streetSuffix();
 resultStr = faker.address.streetPrefix();
 resultStr = faker.address.secondaryAddress();
@@ -63,6 +66,8 @@ resultDate = faker.date.between('foo', 'bar');
 resultDate = faker.date.between(new Date(), new Date());
 resultDate = faker.date.recent();
 resultDate = faker.date.recent(100);
+resultDate = faker.date.soon();
+resultDate = faker.date.soon(30);
 resultStr = faker.date.month();
 resultStr = faker.date.month({
 	abbr: true,
@@ -77,6 +82,7 @@ resultStr = faker.date.weekday({
 resultStr = faker.finance.account();
 resultStr = faker.finance.account(0);
 resultStr = faker.finance.accountName();
+resultStr = faker.finance.routingNumber();
 resultStr = faker.finance.mask();
 resultStr = faker.finance.mask(0, false, false);
 resultStr = faker.finance.amount();
@@ -86,7 +92,20 @@ resultStr = faker.finance.currencyCode();
 resultStr = faker.finance.currencyName();
 resultStr = faker.finance.currencySymbol();
 resultStr = faker.finance.bitcoinAddress();
+resultStr = faker.finance.creditCardNumber();
+resultStr = faker.finance.creditCardNumber('visa');
+resultStr = faker.finance.creditCardCVV();
+resultStr = faker.finance.ethereumAddress();
+resultStr = faker.finance.iban();
+resultStr = faker.finance.iban(true);
 resultStr = faker.finance.bic();
+
+resultStr = faker.git.branch();
+resultStr = faker.git.commitEntry();
+resultStr = faker.git.commitEntry({ merge: true });
+resultStr = faker.git.commitMessage();
+resultStr = faker.git.commitSha();
+resultStr = faker.git.shortSha();
 
 resultStr = faker.hacker.abbreviation();
 resultStr = faker.hacker.adjective();
@@ -96,11 +115,16 @@ resultStr = faker.hacker.ingverb();
 resultStr = faker.hacker.phrase();
 
 resultStr = faker.helpers.randomize();
-resultNum = faker.helpers.randomize([1,2,3,4]);
+resultNum = faker.helpers.randomize([1, 2, 3, 4]);
 resultStr = faker.helpers.randomize(['foo', 'bar', 'quux']);
 resultStr = faker.helpers.slugify('foo bar quux');
 resultStr = faker.helpers.replaceSymbolWithNumber('foo# bar#');
 resultStr = faker.helpers.replaceSymbols('foo# bar? quux#');
+resultStr = faker.helpers.replaceCreditCardSymbols('6453-####-####-####-###L');
+resultStr = faker.helpers.replaceCreditCardSymbols('6453-****-****-****-***L', '*');
+resultStr = faker.helpers.repeatString('a');
+resultStr = faker.helpers.repeatString('a', 10);
+resultStr = faker.helpers.regexpStyleStringParse('#{3}test[1-5]');
 resultStrArr = faker.helpers.shuffle(['foo', 'bar', 'quux']);
 resultStr = faker.helpers.mustache('{{foo}}{{bar}}', {foo: 'x', bar: 'y'});
 
@@ -157,6 +181,7 @@ resultStr = faker.name.lastName(0);
 resultStr = faker.name.findName();
 resultStr = faker.name.findName('', '', 0);
 resultStr = faker.name.jobTitle();
+resultStr = faker.name.gender();
 resultStr = faker.name.prefix();
 resultStr = faker.name.suffix();
 resultStr = faker.name.title();
@@ -167,7 +192,6 @@ resultStr = faker.name.jobType();
 resultStr = faker.phone.phoneNumber();
 resultStr = faker.phone.phoneNumber('#');
 resultStr = faker.phone.phoneNumberFormat();
-// https://github.com/Marak/faker.js/blob/master/lib/phone_number.js#L9-L13
 resultStr = faker.phone.phoneNumberFormat(0);
 resultStr = faker.phone.phoneFormats();
 
@@ -178,28 +202,121 @@ resultNum = faker.random.number({
 	max: 0,
 	precision: 0
 });
+resultNum = faker.random.float();
+resultNum = faker.random.float(0.001);
+resultNum = faker.random.float({
+  min: 0,
+  max: 0,
+  precision: 0.001
+});
 resultStr = faker.random.arrayElement();
-resultStr = faker.random.arrayElement(['foo', 'bar', 'quux'])
+resultStr = faker.random.arrayElement(['foo', 'bar', 'quux']);
+resultStr = faker.random.arrayElement(['foo', 'bar', 'quux'] as ReadonlyArray<string>);
 resultStr = faker.random.objectElement();
 resultStr = faker.random.objectElement({foo: 'bar', field: 'foo'});
 resultStr = faker.random.uuid();
 resultBool = faker.random.boolean();
 resultStr = faker.random.word();
+resultStr = faker.random.word("noun");
 resultStr = faker.random.words();
 resultStr = faker.random.words(0);
 resultStr = faker.random.image();
 resultStr = faker.random.locale();
 resultStr = faker.random.alphaNumeric();
 resultStr = faker.random.alphaNumeric(0);
+resultStr = faker.random.hexaDecimal();
+resultStr = faker.random.hexaDecimal(3);
 
-resultStr = faker.system.fileName( "foo", "bar" );
-resultStr = faker.system.commonFileName( "foo", "bar" );
+resultStr = faker.system.fileName("foo", "bar");
+resultStr = faker.system.commonFileName("foo", "bar");
 resultStr = faker.system.mimeType();
 resultStr = faker.system.commonFileType();
 resultStr = faker.system.commonFileExt();
 resultStr = faker.system.fileType();
-resultStr = faker.system.fileExt( "foo" );
+resultStr = faker.system.fileExt("foo");
+resultStr = faker.system.directoryPath();
+resultStr = faker.system.filePath();
 resultStr = faker.system.semver();
 
+resultStr = faker.vehicle.vehicle();
+resultStr = faker.vehicle.manufacturer();
+resultStr = faker.vehicle.model();
+resultStr = faker.vehicle.type();
+resultStr = faker.vehicle.fuel();
+resultStr = faker.vehicle.vin();
+resultStr = faker.vehicle.color();
+
+import fakerAz = require('faker/locale/az');
+resultStr = fakerAz.name.firstName();
+import fakerCz = require('faker/locale/cz');
+resultStr = fakerCz.name.firstName();
+import fakerDe = require('faker/locale/de');
+resultStr = fakerDe.name.firstName();
+import fakerDeAT = require('faker/locale/de_AT');
+resultStr = fakerDeAT.name.firstName();
+import fakerdeCH = require('faker/locale/de_CH');
+resultStr = fakerdeCH.name.firstName();
 import fakerEn = require('faker/locale/en');
-resultStr = faker.name.firstName();
+resultStr = fakerEn.name.firstName();
+import fakerEnAU = require('faker/locale/en_AU');
+resultStr = fakerEnAU.name.firstName();
+import fakerEnBORK = require('faker/locale/en_BORK');
+resultStr = fakerEnBORK.name.firstName();
+import fakerEnCA = require('faker/locale/en_CA');
+resultStr = fakerEnCA.name.firstName();
+import fakerEnGB = require('faker/locale/en_GB');
+resultStr = fakerEnGB.name.firstName();
+import fakerEnIE = require('faker/locale/en_IE');
+resultStr = fakerEnIE.name.firstName();
+import fakerEnIND = require('faker/locale/en_IND');
+resultStr = fakerEnIND.name.firstName();
+import fakerEnUS = require('faker/locale/en_US');
+resultStr = fakerEnUS.name.firstName();
+import fakerEnAuOcker = require('faker/locale/en_au_ocker');
+resultStr = fakerEnAuOcker.name.firstName();
+import fakerEs = require('faker/locale/es');
+resultStr = fakerEs.name.firstName();
+import fakerEsMX = require('faker/locale/es_MX');
+resultStr = fakerEsMX.name.firstName();
+import fakerFa = require('faker/locale/fa');
+resultStr = fakerFa.name.firstName();
+import fakerFr = require('faker/locale/fr');
+resultStr = fakerFr.name.firstName();
+import fakerFrCA = require('faker/locale/fr_CA');
+resultStr = fakerFrCA.name.firstName();
+import fakerGe = require('faker/locale/ge');
+resultStr = fakerGe.name.firstName();
+import fakerIdID = require('faker/locale/id_ID');
+resultStr = fakerIdID.name.firstName();
+import fakerIt = require('faker/locale/it');
+resultStr = fakerIt.name.firstName();
+import fakerJa = require('faker/locale/ja');
+resultStr = fakerJa.name.firstName();
+import fakerKo = require('faker/locale/ko');
+resultStr = fakerKo.name.firstName();
+import fakerNbNO = require('faker/locale/nb_NO');
+resultStr = fakerNbNO.name.firstName();
+import fakerNep = require('faker/locale/nep');
+resultStr = fakerNep.name.firstName();
+import fakerNl = require('faker/locale/nl');
+resultStr = fakerNl.name.firstName();
+import fakerPl = require('faker/locale/pl');
+resultStr = fakerPl.name.firstName();
+import fakerPtBR = require('faker/locale/pt_BR');
+resultStr = fakerPtBR.name.firstName();
+import fakerRu = require('faker/locale/ru');
+resultStr = fakerRu.name.firstName();
+import fakerSk = require('faker/locale/sk');
+resultStr = fakerSk.name.firstName();
+import fakerSv = require('faker/locale/sv');
+resultStr = fakerSv.name.firstName();
+import fakerTr = require('faker/locale/tr');
+resultStr = fakerTr.name.firstName();
+import fakerUk = require('faker/locale/uk');
+resultStr = fakerUk.name.firstName();
+import fakerVi = require('faker/locale/vi');
+resultStr = fakerVi.name.firstName();
+import fakerZhCN = require('faker/locale/zh_CN');
+resultStr = fakerZhCN.name.firstName();
+import fakerZhTW = require('faker/locale/zh_TW');
+resultStr = fakerZhTW.name.firstName();

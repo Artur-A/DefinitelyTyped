@@ -1,6 +1,12 @@
 
 
 fbq('init', '<FB_PIXEL_ID>');
+
+// https://developers.facebook.com/ads/blog/post/2017/11/28/event-tracking-with-multiple-pixels-tracksingle/
+var viewContentParam:facebook.Pixel.ViewContentParameters = {currency: 'EUR', value: 15.23};
+fbq('trackSingle', '<FB_PIXEL_ID>', 'ViewContent', viewContentParam);
+fbq('trackSingleCustom', '<FB_PIXEL>', 'CustomContent', {});
+
 fbq('track', 'PageView');
 
 // Standard event (can be used for conversion tracking
@@ -13,7 +19,10 @@ fbq('track', 'Purchase', purchaseParam);
 
 // Custom event (can only be used for audience building)
 
-var custom_params = {custom_param: 'custom_value'};
+var custom_params = {
+    custom_param: 'custom_value',
+    content_type: 'product'
+};
 fbq('trackCustom', 'MyCustomEvent', custom_params);
 
 // Reach customers that viewed a product in the 'Shoes' category

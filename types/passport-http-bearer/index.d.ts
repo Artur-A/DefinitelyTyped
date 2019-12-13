@@ -2,6 +2,7 @@
 // Project: https://github.com/jaredhanson/passport-http-bearer
 // Definitions by: Isman Usoh <https://github.com/isman-usoh>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 2.3
 
 /// <reference types="passport"/>
 /// <reference types="express" />
@@ -10,9 +11,9 @@ import passport = require("passport");
 import express = require("express");
 
 interface IStrategyOptions {
-    scope: string | Array<string>;
-    realm: string;
-    passReqToCallback: boolean;
+    scope?: string | Array<string>;
+    realm?: string;
+    passReqToCallback?: boolean;
 }
 interface IVerifyOptions {
     message: string;
@@ -33,5 +34,5 @@ declare class Strategy implements passport.Strategy {
     constructor(options: IStrategyOptions, verify: VerifyFunctionWithRequest);
 
     name: string;
-    authenticate: (req: express.Request, options?: Object) => void;
+    authenticate(req: express.Request, options?: Object): void;
 }

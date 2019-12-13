@@ -8,6 +8,7 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": false,
+        "strictFunctionTypes": true,
         "baseUrl": "../",
         "typeRoots": [
             "../"
@@ -18,9 +19,6 @@
     },
     "files": [
         "index.d.ts",
-        "jquery.sap.d.ts",
-        "sap.m.d.ts",
-        "sap.ui.d.ts",
         "openui5-tests.ts"
     ]
 }

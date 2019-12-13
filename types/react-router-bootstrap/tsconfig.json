@@ -8,25 +8,18 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": false,
+        "strictFunctionTypes": true,
         "jsx": "preserve",
         "baseUrl": "../",
         "typeRoots": [
             "../"
         ],
-        "paths": {
-            "history": ["history/v3"],
-            "history/*": ["history/v3/*"],
-            "react-router": ["react-router/v3"],
-            "react-router/*": ["react-router/v3/*"]
-        },
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "lib/IndexLinkContainer.d.ts",
-        "lib/LinkContainer.d.ts",
         "react-router-bootstrap-tests.tsx"
     ]
 }

@@ -1,6 +1,7 @@
+import * as angular from 'angular';
+import * as angularTranslate from 'angular-translate';
 
-
-var app = angular.module('at', ['pascalprecht.translate']);
+var app = angular.module('at', [angularTranslate]);
 
 app.factory('customLoader', ($q:angular.IQService) => {
     return (options:any) => {
@@ -46,4 +47,8 @@ app.controller('Ctrl', ($scope: Scope, $translate: angular.translate.ITranslateS
     x = $filter('translate')('something');
     x = $filter('translate')('something', {});
     x = $filter('translate')('something', {}, '');
+    var o = $filter('translate')(['a', 'b', 'c']);
+    o.a;
+    o.b;
+    o.c;
 });

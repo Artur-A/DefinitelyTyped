@@ -8,6 +8,7 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": false,
+        "strictFunctionTypes": true,
         "baseUrl": "../",
         "jsx": "react",
         "typeRoots": [
@@ -15,10 +16,12 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": false
     },
     "files": [
         "index.d.ts",
-        "react-bootstrap-tests.tsx"
+        "test/react-bootstrap-tests.tsx",
+        "test/react-bootstrap-individual-components-tests.tsx"
     ]
 }

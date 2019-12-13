@@ -1,7 +1,8 @@
 // Type definitions for Knockback.js
-// Project: http://kmalakoff.github.io/knockback/
-// Definitions by: Boris Yankov <https://github.com/borisyankov/>
+// Project: http://kmalakoff.github.com/knockback
+// Definitions by: Boris Yankov <https://github.com/borisyankov>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 2.8
 
 /// <reference types="knockout" />
 /// <reference types="backbone" />
@@ -75,8 +76,8 @@ declare namespace Knockback {
         constructor (format: KnockoutObservable<any>, args: any[]);
     }
 
-    interface LocalizedObservable {
-        constructor (value: any, options: any, vm: any);
+    class LocalizedObservable {
+        constructor(value: any, options: any, vm: any);
         destroy();
         resetToCurrent();
         observedValue(value: any);

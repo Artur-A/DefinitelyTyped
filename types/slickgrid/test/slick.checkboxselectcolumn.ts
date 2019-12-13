@@ -1,3 +1,6 @@
+/// <reference types="../../slickgrid/slick.checkboxselectcolumn" />
+/// <reference types="../../slickgrid/slick.rowselectionmodel" />
+/// <reference types="../../slickgrid/slick.columnpicker" />
 /**
  * Extracted from https://github.com/mleibman/SlickGrid/blob/master/examples/example-checkbox-row-select.html
  */
@@ -34,6 +37,6 @@
         grid = new Slick.Grid("#myGrid", data, columns, options);
         grid.setSelectionModel(new Slick.RowSelectionModel({ selectActiveRow: false }));
         grid.registerPlugin(checkboxSelector);
-        var columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+        var columnpicker = new Slick.Controls.ColumnPicker(columns, grid, { fadeSpeed: 1 });
     })
 })();

@@ -1,16 +1,21 @@
-// Type definitions for faker v4.1.0
+// Type definitions for faker 4.1
 // Project: http://marak.com/faker.js/
-// Definitions by: Ben Swartz <https://github.com/bensw/>, Bas Pennings <https://github.com/basp/>, Yuki Kokubun <https://github.com/Kuniwak>
+// Definitions by: Ben Swartz <https://github.com/bensw>,
+//                 Bas Pennings <https://github.com/basp>,
+//                 Yuki Kokubun <https://github.com/Kuniwak>,
+//                 Matt Bishop <https://github.com/mattbishop>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare var fakerStatic: Faker.FakerStatic;
+declare const fakerStatic: Faker.FakerStatic;
 
 declare namespace Faker {
 	interface FakerStatic {
 		locale: string;
+		setLocale(locale: string): void;
 
 		address: {
 			zipCode(format?: string): string;
+			zipCodeByState(state: string): string;
 			city(format?: number): string;
 			cityPrefix(): string;
 			citySuffix(): string;
@@ -64,6 +69,7 @@ declare namespace Faker {
 			future(years?: number, refDate?: string|Date): Date;
 			between(from: string|number|Date, to: string|Date): Date;
 			recent(days?: number): Date;
+			soon(days?: number): Date;
 			month(options?: { abbr?: boolean, context?: boolean }): string;
 			weekday(options?: { abbr?: boolean, context?: boolean }): string;
 		};
@@ -73,15 +79,28 @@ declare namespace Faker {
 		finance: {
 			account(length?: number): string;
 			accountName(): string;
+			routingNumber(): string;
 			mask(length?: number, parens?: boolean, elipsis?: boolean): string;
-			amount(min?:number, max?: number, dec?: number, symbol?: string): string;
+			amount(min?: number, max?: number, dec?: number, symbol?: string): string;
 			transactionType(): string;
 			currencyCode(): string;
 			currencyName(): string;
 			currencySymbol(): string;
 			bitcoinAddress(): string;
+			creditCardNumber(provider?: string): string;
+			creditCardCVV(): string;
+			ethereumAddress(): string;
+			iban(formatted?: boolean): string
 			bic(): string
 		};
+
+		git: {
+			branch(): string;
+			commitEntry(options?: { merge: boolean }): string;
+			commitMessage(): string;
+			commitSha(): string;
+			shortSha(): string;
+		}
 
 		hacker: {
 			abbreviation(): string;
@@ -98,20 +117,22 @@ declare namespace Faker {
 			slugify(string?: string): string;
 			replaceSymbolWithNumber(string?: string, symbol?: string): string;
 			replaceSymbols(string?: string): string;
+			replaceCreditCardSymbols(string: string, symbol?: string): string;
+			repeatString(string: string, num?: number): string;
+			regexpStyleStringParse(string: string): string;
 			shuffle<T>(o: T[]): T[];
 			shuffle(): string[];
 			mustache(str: string, data: { [key: string]: string|((substring: string, ...args: any[]) => string) }): string;
-			createCard(): Faker.Card;
-			contextualCard(): Faker.ContextualCard;
-			userCard(): Faker.UserCard;
-			createTransaction(): Faker.Transaction;
+			createCard(): Card;
+			contextualCard(): ContextualCard;
+			userCard(): UserCard;
+			createTransaction(): Transaction;
 		};
-
 
 		image: {
 			image(): string;
 			avatar(): string;
-			imageUrl(width?: number, height?: number, category?: string): string;
+			imageUrl(width?: number, height?: number, category?: string, randomize?: boolean, https?: boolean): string;
 			abstract(width?: number, height?: number): string;
 			animals(width?: number, height?: number): string;
 			business(width?: number, height?: number): string;
@@ -163,6 +184,7 @@ declare namespace Faker {
 			lastName(gender?: number): string;
 			findName(firstName?: string, lastName?: string, gender?: number): string;
 			jobTitle(): string;
+			gender(): string;
 			prefix(): string;
 			suffix(): string;
 			title(): string;
@@ -178,35 +200,50 @@ declare namespace Faker {
 		};
 
 		random: {
-			number(max: number): number;
+			number(max?: number): number;
 			number(options?: { min?: number, max?: number, precision?: number }): number;
+			float(precision?: number): number;
+			float(options?: { min?: number, max?: number, precision?: number }): number;
 			arrayElement(): string;
 			arrayElement<T>(array: T[]): T;
+			arrayElement<T>(array: ReadonlyArray<T>): T;
 			objectElement(object?: { [key: string]: any }, field?: "key"): string;
 			objectElement<T>(object?: { [key: string]: T }, field?: any): T;
 			uuid(): string;
 			boolean(): boolean;
-			word(): string; // TODO: have ability to return specific type of word? As in: noun, adjective, verb, etc
+			word(type?: string): string;
 			words(count?: number): string;
 			image(): string;
 			locale(): string;
 			alphaNumeric(count?: number): string;
+			hexaDecimal(count?: number): string;
 		};
 
 		system: {
-			fileName(ext: string, type: string): string;
-			commonFileName(ext: string, type: string): string;
+			fileName(ext?: string, type?: string): string;
+			commonFileName(ext: string, type?: string): string;
 			mimeType(): string;
 			commonFileType(): string;
 			commonFileExt(): string;
 			fileType(): string;
 			fileExt(mimeType: string): string;
-			//directoryPath(): string;
-			//filePath(): string;
+			directoryPath(): string;
+			filePath(): string;
 			semver(): string;
 		};
 
 		seed(value: number): void;
+		seedValue?: number;
+
+		vehicle: {
+			vehicle(): string;
+			manufacturer(): string;
+			model(): string;
+			type(): string;
+			fuel(): string;
+			vin(): string;
+			color(): string;
+		}
 	}
 
 	interface Card {
@@ -312,10 +349,6 @@ declare module "faker/locale/de_AT" {
 }
 
 declare module "faker/locale/de_CH" {
-	export = fakerStatic;
-}
-
-declare module "faker/locale/el_GR" {
 	export = fakerStatic;
 }
 

@@ -1,35 +1,34 @@
-import * as m from 'mithril'
-import {ClassComponent, CVnode, CVnodeDOM} from 'mithril'
+import * as m from 'mithril';
 
 ///////////////////////////////////////////////////////////
 // 0.
 // Simplest component example - no attrs or state.
 //
-class Comp0 implements ClassComponent<{}> {
-	constructor (vnode: CVnode<{}>) {
+class Comp0 implements m.ClassComponent {
+	constructor(vnode: m.CVnode) {
 	}
 	view() {
-		return m('span', "Test")
+		return m('span', "Test");
 	}
 }
 
 // Mount the component
-m.mount(document.getElementById('comp0')!, Comp0)
+m.mount(document.getElementById('comp0')!, Comp0);
 
 // Unmount the component
-m.mount(document.getElementById('comp0')!, null)
+m.mount(document.getElementById('comp0')!, null);
 
 ///////////////////////////////////////////////////////////
 // 1.
 // Simple example with lifecycle methods.
 //
-class Comp1 implements ClassComponent<{}> {
-	oninit (vnode: CVnode<{}>) {
+class Comp1 implements m.ClassComponent {
+	oninit(vnode: m.CVnode) {
 	}
-	oncreate ({dom}: CVnodeDOM<{}>) {
+	oncreate({dom}: m.CVnodeDOM) {
 	}
-	view (vnode: CVnode<{}>) {
-		return m('span', "Test")
+	view(vnode: m.CVnode) {
+		return m('span', "Test");
 	}
 }
 
@@ -38,13 +37,13 @@ class Comp1 implements ClassComponent<{}> {
 // Component with attrs type
 //
 interface Comp2Attrs {
-	title: string
-	description: string
+	title: string;
+	description: string;
 }
 
-class Comp2 implements ClassComponent<Comp2Attrs> {
-	view ({attrs: {title, description}}: CVnode<Comp2Attrs>) {
-		return [m('h2', title), m('p', description)]
+class Comp2 implements m.ClassComponent<Comp2Attrs> {
+	view({attrs: {title, description}}: m.CVnode<Comp2Attrs>) {
+		return [m('h2', title), m('p', description)];
 	}
 }
 
@@ -54,11 +53,11 @@ class Comp2 implements ClassComponent<Comp2Attrs> {
 // Uses comp2 with typed attrs and makes use of `onremove`
 // lifecycle method.
 //
-class Comp3 implements ClassComponent<{pageHead: string}> {
-	oncreate ({dom}: CVnodeDOM<{pageHead: string}>) {
+class Comp3 implements m.ClassComponent<{pageHead: string}> {
+	oncreate({dom}: m.CVnodeDOM<{pageHead: string}>) {
 		// Can do stuff with dom
 	}
-	view ({attrs}: CVnode<{pageHead: string}>) {
+	view({attrs}: m.CVnode<{pageHead: string}>) {
 		return m('.page',
 			m('h1', attrs.pageHead),
 			m(Comp2,
@@ -66,16 +65,16 @@ class Comp3 implements ClassComponent<{pageHead: string}> {
 					// attrs is type checked - nice!
 					title: "A Title",
 					description: "Some descriptive text.",
-					onremove: (vnode) => {
+					onremove(vnode) {
 						// Vnode type is inferred
-						console.log("comp2 was removed")
+						console.log("comp2 was removed");
 					},
 				}
 			),
 			// Test other hyperscript parameter variations
 			m(Comp1, m(Comp1)),
 			m('br')
-		)
+		);
 	}
 }
 
@@ -84,26 +83,27 @@ class Comp3 implements ClassComponent<{pageHead: string}> {
 // Typed attrs, component with state, methods
 //
 interface Comp4Attrs {
-	name: string
+	name: string;
 }
 
-class Comp4 implements ClassComponent<Comp4Attrs> {
-	count: number
-	constructor (vnode: CVnode<Comp4Attrs>) {
-		this.count = 0
+class Comp4 implements m.ClassComponent<Comp4Attrs> {
+	count: number;
+	constructor(vnode: m.CVnode<Comp4Attrs>) {
+		this.count = 0;
 	}
-	add (num: number) {
-		this.count += num
+	add(num: number) {
+		this.count += num;
 	}
-	view ({attrs}: CVnode<Comp4Attrs>) {
+	view(vnode: m.Vnode<Comp4Attrs, Comp4>) {
 		return [
-			m('h1', `This ${attrs.name} has been clicked ${this.count} times`),
+			m('h1', `This ${vnode.attrs.name} has been clicked ${this.count} times`),
 			m('button',
 				{
-					onclick: () => this.add(1)
+					// Can access 'this' via vnode.state
+					onclick: () => vnode.state.add(1)
 				},
 			"Click me")
-		]
+		];
 	}
 }
 
@@ -117,19 +117,19 @@ m.route(document.body, '/', {
 	'/comp2': Comp2,
 	'/comp3': Comp3,
 	'/comp4': Comp4
-})
+});
 
 ///////////////////////////////////////////////////////////
 //
 // Concise module example with default export
 //
 export interface Attrs {
-	name: string
+	name: string;
 }
 
-export default class MyComponent implements ClassComponent<Attrs> {
-	count = 0
-	view ({attrs}: CVnode<Attrs>) {
-		return m('span', `name: ${attrs.name}, count: ${this.count}`)
+export default class MyComponent implements m.ClassComponent<Attrs> {
+	count = 0;
+	view({attrs}: m.CVnode<Attrs>) {
+		return m('span', `name: ${attrs.name}, count: ${this.count}`);
 	}
 }

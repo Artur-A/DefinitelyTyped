@@ -5,20 +5,22 @@
             "es6",
             "dom"
         ],
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": false,
         "baseUrl": "../",
         "typeRoots": [
             "../"
         ],
+        "jsx": "react",
         "types": [],
-        "noEmit": true,
-        "forceConsistentCasingInFileNames": true
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": false,
+        "strictFunctionTypes": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true
     },
     "files": [
         "index.d.ts",
-        "utils/index.d.ts",
-        "flux-tests.ts"
+        "test/Flux.ts",
+        "test/FluxUtils.tsx"
     ]
 }

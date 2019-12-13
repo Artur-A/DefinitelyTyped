@@ -7,7 +7,8 @@
         ],
         "noImplicitAny": true,
         "noImplicitThis": false,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
+        "strictFunctionTypes": false,
         "baseUrl": "../",
         "typeRoots": [
             "../"
@@ -18,15 +19,7 @@
     },
     "files": [
         "index.d.ts",
-        "chrome.d.ts",
-        "edge.d.ts",
-        "firefox.d.ts",
-        "http.d.ts",
-        "ie.d.ts",
-        "opera.d.ts",
-        "remote.d.ts",
-        "safari.d.ts",
-        "testing.d.ts",
+        "test/ie.ts",
         "test/index.ts",
         "test/chrome.ts",
         "test/firefox.ts",

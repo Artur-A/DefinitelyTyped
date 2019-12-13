@@ -1,6 +1,6 @@
 // Type definitions for VoxImplant Web SDK 3.0.x
 // Project: http://voximplant.com/
-// Definitions by: Alexey Aylarov <https://github.com/aylarov/>
+// Definitions by: Alexey Aylarov <https://github.com/aylarov>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 export = VoxImplant;
@@ -942,7 +942,7 @@ declare namespace VoxImplant {
 		}
 
 		/**
-		*	Event dispatched when some user tries to add current user into his roster. Current user can confirm or reject the subscription, then VoxImplant.IMEvents.RosterItemChange will be dispatched on for user that made the request
+		*	Event dispatched when some user tries to add current user into their roster. Current user can confirm or reject the subscription, then VoxImplant.IMEvents.RosterItemChange will be dispatched on for user that made the request
 		*/
 		interface SubscriptionRequest {
 			/**
@@ -1212,11 +1212,11 @@ declare namespace VoxImplant {
 
 	enum SubscriptionRequestType {
 		/**
-		*	User is asking for permission to add you into his roster
+		*	User is asking for permission to add you into their roster
 		*/
 		Subscribe,
 		/**
-		*	User removed you from his roster
+		*	User removed you from their roster
 		*/
 		Unsubscribe
 	}

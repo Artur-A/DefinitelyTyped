@@ -51,6 +51,7 @@ function test_droppable() {
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: (event, ui) => {
+            console.log(`${event.screenX}, ${event.screenY}`);
             $(this)
                 .addClass("ui-state-highlight")
                 .find("p")
@@ -641,7 +642,7 @@ function test_autocomplete() {
                     .insertAfter(select);
 
             function removeIfInvalid(element) {
-                var value = $(element).val(),
+                var value = $(element).val() as string,
                     matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(value) + "$", "i"),
                     valid = false;
                 select.children("option").each(() => {
@@ -911,7 +912,12 @@ function test_autocomplete() {
                 "Nothing selected, input was " + this.value);
         }
     });
-
+    $("#birds").autocomplete({
+        classes: {
+            'ui-autocomplete': 'foo',
+            'ui-autocomplete-input': 'bar'
+        }
+    })
 }
 
 
@@ -1080,7 +1086,7 @@ function test_datepicker() {
     $("#datepicker").datepicker($.datepicker.regional["fr"]);
     $("#locale").change(function () {
         $("#datepicker").datepicker("option",
-            $.datepicker.regional[$(this).val()]);
+            $.datepicker.regional[$(this).val() as string]);
     });
     $("#datepicker").datepicker({
         altField: "#alternate",
@@ -1432,6 +1438,7 @@ function test_dialog() {
     $(".selector").dialog({ autoOpen: false });
     $(".selector").dialog({ buttons: { Ok: function () { $(this).dialog("close"); } } });
     $(".selector").dialog({ buttons: [ { text: "Ok", click: function () { $(this).dialog("close"); } } ] } );
+    $(".selector").dialog({ classes: { "ui-dialog": "custom", "ui-dialog-content": "custom-content" } } );
     $(".selector").dialog({ closeOnEscape: false });
     $(".selector").dialog({ closeText: "hide" });
     $(".selector").dialog({ appendTo: "appendTo" });
@@ -1593,6 +1600,7 @@ function test_slider() {
     $(".selector").slider({ step: 5 });
     $(".selector").slider({ value: 10 });
     $(".selector").slider({ values: [10, 25] });
+    $(".selector").slider({ classes: { "ui-slider": "custom", "ui-slider-handle": "custom-handle" } } );
 }
 
 
@@ -1692,11 +1700,11 @@ function test_tabs() {
     });
     $("#tabs").tabs({
         beforeLoad: function (event, ui) {
-            ui.jqXHR.error = function () {
+            ui.jqXHR.fail(function () {
                 ui.panel.html(
                     "Couldn't load this tab. We'll try to fix this as soon as possible. " +
                     "If this wouldn't be a demo.");
-            };
+            });
         }
     });
     $("#tabs").tabs({
@@ -1712,6 +1720,7 @@ function test_tabs() {
     $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
     $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
     $(".selector").tabs({ active: 1 });
+    $(".selector").tabs({ classes: { "ui-tabs": "custom", "ui-tabs-panel": "custom-panel" } } );
     $(".selector").tabs({ collapsible: true });
     $(".selector").tabs({ disabled: [0, 2] });
     $(".selector").tabs({ event: "mouseover" });
@@ -1789,7 +1798,7 @@ function test_effects() {
         width: 500
     }, 1000);
     $("div").effect("bounce", "slow");
-    var selectedEffect = $("#effectTypes").val();
+    var selectedEffect = $("#effectTypes").val() as string;
     var options: any;
     if (selectedEffect === "scale") {
         options = { percent: 0 };
@@ -1854,6 +1863,7 @@ function test_ui() {
     $("aDialog").keypress(function (e) {
         return (e.keyCode == $.ui.keyCode.ENTER);
     });
+    $(".selector").jQuery.ui.selectmenu({ disabled: true });
 }
 
 function test_widget() {
@@ -1869,7 +1879,7 @@ function test_widget() {
 }
 
 function test_easing() {
-    const easing = jQuery.easing;
+    const easing = (<any> jQuery).easing;
 
     function test_easing_function( name: string, fn: JQueryEasingFunction ) {
         const step = Math.pow( 2, -3 ); // use power of 2 to prevent floating point rounding error

@@ -1,7 +1,6 @@
 {
     "files": [
         "index.d.ts",
-        "mocks.d.ts",
         "angular-mocks-tests.ts"
     ],
     "compilerOptions": {
@@ -13,6 +12,7 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": false,
+        "strictFunctionTypes": true,
         "baseUrl": "../",
         "typeRoots": [
             "../"

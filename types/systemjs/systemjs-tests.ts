@@ -1,48 +1,81 @@
-import SystemJS = require('systemjs');
-
-SystemJS.config({
-    baseURL: '/app'
+System.import('./hi.js').then((hi) => {
+    hi.someProperty();
 });
 
-SystemJS.import('main.js');
-
-SystemJS.config({
-    // or 'traceur' or 'typescript' 
-    transpiler: 'babel',
-    // or traceurOptions or typescriptOptions 
-    babelOptions: {
-
-    }
+System.import<Hi>('./hi.js').then(hi => {
+    hi.someExport();
 });
 
+System.import('./hi.js', 'https://example.com/base/');
 
-SystemJS.config({
-    map: {
-        traceur: 'path/to/traceur.js'
-    }
+System.register(['foo', 'bar'], (_export, _context) => {
+    let foo;
+    let bar;
+
+    return {
+        setters: [
+            module => {
+                foo = module;
+            },
+            module => {
+                bar = module;
+            }
+        ],
+        execute() {
+            _export('a', 'thing');
+            _export('b', 123);
+            _export('c', () => 'hi');
+            _export({some: 'thing'});
+
+            _context.import('./other-thing.js');
+
+            _context.meta.url;
+        }
+    };
 });
 
-SystemJS.config({
-  map: {
-    'local/package': {
-      x: 'vendor/x.js'
-    },
-    'another/package': {
-      x: 'vendor/y.js'
-    }
-  }
+// named register
+System.register('name', [], () => ({}));
+
+const update = System.delete('https://example.com/a.js');
+if (update) {
+    update();
+} else {
+    const expected: false = update;
+}
+
+const a = System.get('https://example.com/a.js');
+if (a) {
+    a.doThing();
+} else {
+    // $ExpectType null
+    a;
+}
+
+const b = System.get<ModuleB>('https://example.com/b.js');
+if (b) {
+    b.theBThing();
+} else {
+    // $ExpectType null
+    b;
+}
+
+const hasC: boolean = System.has('https://example.com/c.js');
+
+System.set('https://example.com/d.js', {
+    hi: 'there'
 });
 
-SystemJS.transpiler = 'traceur';
+for (const entry of System.entries()) {
+    // $ExpectType: string
+    const moduleId = entry[0];
+    const module = entry[1];
+}
 
+interface ModuleB {
+    theBThing(): void;
+}
 
-// loads './app.js' from the current directory 
-SystemJS.import('./app.js').then(function (m) {
-    console.log(m);
-});
-
-SystemJS.import('lodash').then(function (_) {
-    console.log(_);
-});
-
-const clonedSystemJSJS = new SystemJS.constructor();
+interface Hi {
+    someExport(): void;
+}

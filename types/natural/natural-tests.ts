@@ -1,9 +1,3 @@
-// Type definitions for Natural 0.2.1
-// Project: https://github.com/NaturalNode/natural
-// Definitions by: Dylan R. E. Moonfire <https://github.com/dmoonfire/>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-
 import natural = require('natural');
 
 // Tokenizers
@@ -34,6 +28,12 @@ console.log(natural.LevenshteinDistance("ones","onez", {
     deletion_cost: 1,
     substitution_cost: 1
 }));
+// $ExpectType SubstringDistanceResult
+natural.DamerauLevenshteinDistance("ones","onez", { search: true });
+// $ExpectType number
+natural.DamerauLevenshteinDistance("ones","onez", { search: false });
+// $ExpectType number | SubstringDistanceResult
+natural.DamerauLevenshteinDistance("ones","onez", { search: Math.random() > 0.5 });
 
 console.log(natural.DiceCoefficient('thing', 'thing'));
 console.log(natural.DiceCoefficient('not', 'same'));
@@ -59,7 +59,12 @@ classifier.addDocument('sell gold', 'sell');
 classifier.train();
 console.log(classifier.classify('i am short silver'));
 console.log(classifier.classify('i am long copper'));
-console.log(classifier.getClassifications('i am long copper'));
+var classifications = classifier.getClassifications('i am long copper');
+classifications.forEach(function(classification) {
+    var label = classification.label
+    var value = classification.value
+    console.log('label: ' + label + ', value: ' + value)
+})
 classifier.addDocument(['sell', 'gold'], 'sell');
 classifier.events.on('trainedWithDocument', function (obj: any) {
    console.log(obj);
@@ -259,3 +264,16 @@ var spellcheck = new natural.Spellcheck(corpus);
 spellcheck.isCorrect('cat'); // false
 spellcheck.getCorrections('soemthing', 1); // ['something']
 spellcheck.getCorrections('soemthing', 2); // ['something', 'soothing']
+
+// POS Tagger
+
+var rulesFilename = 'fileName';
+var lexiconFilename = 'fileName';
+var defaultCategory = 'N';
+
+var lexicon = new natural.Lexicon(lexiconFilename, defaultCategory);
+var rules = new natural.RuleSet(rulesFilename);
+var tagger = new natural.BrillPOSTagger(lexicon, rules);
+
+var sentence = ["I", "see", "the", "man", "with", "the", "telescope"];
+tagger.tag(sentence);

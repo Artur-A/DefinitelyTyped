@@ -1,8 +1,7 @@
-
-import * as express from 'express';
+import express = require('express');
 import * as mongoose from 'mongoose';
-import * as session from 'express-session';
-import * as connectMongo from 'connect-mongo';
+import session = require('express-session');
+import connectMongo = require('connect-mongo');
 import * as mongodb from 'mongodb';
 
 var app = express();
@@ -12,34 +11,47 @@ var MongoStore = connectMongo(session);
 
 /// Use MongoStore
 
+var url = 'mongodb://localhost/test';
+
 // MongoUrlOptions
 app.use(session({
     secret: 'secret',
-    store: new MongoStore({url: 'mongodb://localhost/test'})
+    store: new MongoStore({url})
 }));
 
 
 app.use(session({
     secret: 'secret',
     store: new MongoStore({
-        url: 'mongodb://localhost/test',
+        url,
         collection: "test-sessions",
         ttl: 30 * 24 * 60 * 60 // = 30 days
     })
 }));
 
 // MongooseConnectionOptions
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect(url)
 app.use(session({
     secret: 'secret',
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
 // NativeMongoOptions
-var Db = mongodb.Db
-var Server = mongodb.Server
-var mongoDb = new Db('test', new Server('localhost', 27017));
+var MongoClient = mongodb.MongoClient;
+MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(client => {
+    app.use(session({
+        secret: 'secret',
+        store: new MongoStore({ client })
+    }));
+});
+
+// NativeMongoPromiseOptions
+var Client = mongodb.MongoClient;
+var clientPromise = Client.connect(url);
 app.use(session({
     secret: 'secret',
-    store: new MongoStore({db: mongoDb})
+    store: new MongoStore({ clientPromise })
 }));

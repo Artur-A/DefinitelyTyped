@@ -9,6 +9,18 @@ function encodingAndDecoding() {
   const data = msgpack.decode(buffer); // => {"foo": "bar"}
 }
 
+function customCodec() {
+  msgpack.createCodec({
+    preset: true,
+    safe: true,
+    useraw: true,
+    int64: true,
+    binarraybuffer: true,
+    uint8array: true,
+    usemap: true
+  });
+}
+
 // https://github.com/kawanet/msgpack-lite#writing-to-messagepack-stream
 function writingToStream() {
   const fs = require("fs");
@@ -71,4 +83,19 @@ function customExtensionTypes() {
     const array = msgpack.decode(buffer);
     return new MyVector(array[0], array[1]); // return Object deserialized
   }
+}
+
+// https://github.com/kawanet/msgpack-lite#benchmarks
+// (this is not well documented, but in the test there is an example usage.)
+function standaloneDecoder() {
+  const decoder = msgpack.Decoder();
+  const object = { test: "Object" };
+  const encoded = msgpack.encode(object);
+  decoder.on('data', (obj) => {
+    if (object.test !== obj.test) {
+      throw Error();
+    }
+  });
+
+  decoder.push(encoded);
 }

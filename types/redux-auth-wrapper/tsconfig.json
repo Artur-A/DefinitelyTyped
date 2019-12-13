@@ -8,12 +8,11 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
+        "strictFunctionTypes": true,
         "baseUrl": "../",
-        "typeRoots": ["../"],
-        "paths": {
-          "history": ["history/v3"],
-          "history/*": ["history/v3/*"]
-        },
+        "typeRoots": [
+            "../"
+        ],
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,

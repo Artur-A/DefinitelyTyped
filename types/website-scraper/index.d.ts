@@ -1,7 +1,10 @@
 // Type definitions for website-scraper v1.2.x
 // Project: https://github.com/s0ph1e/node-website-scraper
-// Definitions by: Christian Rackerseder <https://www.echooff.de>
+// Definitions by: Christian Rackerseder <https://github.com/screendriver>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 2.3
+
+/// <reference types="request" />
 
 import * as request from 'request';
 
@@ -10,19 +13,23 @@ declare namespace websiteScraper {
         url: string;
         filename: string;
     }
+
     interface SubDirectory {
         directory: string;
         extensions: string[];
     }
+
     interface Source {
         selector: string;
-        attr: string;
+        attr?: string;
     }
+
     interface RequestOptions {
-        headers: request.Headers
+        headers: request.Headers;
     }
+
     interface Options {
-        urls: Array<string | Url>;
+        urls: (string | Url)[];
         directory: string;
         urlFilter?: (url: string) => boolean;
         filenameGenerator?: string;
@@ -34,17 +41,27 @@ declare namespace websiteScraper {
         recursive?: boolean;
         maxDepth?: number;
         ignoreErrors?: boolean;
+        maxRecursiveDepth?: number;
+        requestConcurrency?: number;
+        plugins?: object[];
     }
+
     interface Resource {
         url: string;
         filename: string;
         assets: Resource[];
     }
+
     interface Callback {
         (error: any | null, result: Resource[] | null): void;
     }
-    function scrape(options: Options, callback: Callback): void;
-    function scrape(options: Options): Promise<Resource[]>;
+
+    interface Scrape {
+        (options: Options, callback: Callback): void;
+        (options: Options): Promise<Resource[]>;
+    }
 }
+
+declare const websiteScraper: websiteScraper.Scrape;
 
 export = websiteScraper;
